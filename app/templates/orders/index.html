@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% block title %}Mis Pedidos - PetShop {%endblock %} 
+{% block content %}
+<div class="container">
+    <h1>Historial de Pedidos</h1>
+    {% if order_details %}
+    <ul>
+        {% for order_detail in order_details %}
+        <li>
+            <strong>Número de Orden:</strong> {{ order_detail.order.id }}<br />
+            <strong>Fecha de Creación:</strong> {{ order_detail.order.created_at }}<br />
+            <strong>Estado:</strong> {{ order_detail.order.status }}<br />
+            <strong>Total:</strong> ${{ order_detail.order.total_amount }}<br />
+
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample{{order_detail.order.id}}"
+                role="button" aria-expanded="false" aria-controls="multiCollapseExample{{order_detail.order.id}}">Ver
+                detalles</a>
+            <ul>
+                {% for detail in order_detail.details %}
+                <div class="collapse multi-collapse" id="multiCollapseExample{{order_detail.order.id}}">
+                    <li>
+                        <strong>Producto:</strong> {{ detail.product.name }}<br />
+                        <strong>Cantidad:</strong> {{ detail.quantity }}<br />
+                        <strong>Precio Unitario:</strong> ${{ detail.price }}<br />
+                        <strong>Total por Producto:</strong> ${{ detail.get_total_price }}
+                    </li>
+                </div>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No tienes ningún pedido realizado.</p>
+    {% endif %}
+</div>
+{% endblock content %}

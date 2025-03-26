@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}{{product.name}}{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src={{product.image}} class="img-fluid" />
+        </div>
+        <div class="col-md-6">
+            <h1 class="display-5">{{product.name}}</h1>
+            <h2 class="text-muted">${{product.price}}</h2>
+            <div class="mb-3">
+                <span class="badge bg-secondary">1 un</span>
+            </div>
+            <div class="mb-3">
+                <i class="fa-solid fa-star text-warning me-1"></i>
+                {{product.rating}}
+            </div>
+            {% if product.stock >= 1 %}
+            <p>Disponible: <Strong>{{product.stock}}</Strong> stocks</p>
+            {% else %}
+            <p>Producto sin existencias</p>
+            {% endif %}
+            <div class="btn-group align-items-center" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary opacity-75">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+
+                <div class="px-1"><strong>1</strong></div>
+                <button type="button" class="btn btn-primary opacity-75">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+            <br />
+
+            {% if product.stock >= 1 %}
+            <button class="btn btn-primary opacity-75 w-50 mt-3"
+                onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}', '{{ product.image }}');">
+                Agregar al carrito</button>
+            {% else %}
+            <button class="btn btn-dark-subtle w-50 mt-3" disabled>Producto sin stock</button>
+            {% endif %}
+            <button class="btn btn-light w-10 mt-3 ms-1">
+                <i class="fa-solid fa-star text-warning"></i>
+            </button>
+            <div class="pt-5 fw-bold">Descripcion:</div>
+            <div>{{product.description}}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+.text-truncate-multiline {
+    display: -webkit-box;
+    --webkit-line-clamp: 2;/* Número máximo de líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+  }

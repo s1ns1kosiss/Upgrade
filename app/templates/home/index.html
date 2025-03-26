@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}
+  Inicio -  PetyFlix
+{% endblock title %}
+{% block content %}
+{% load static %}
+
+<!-- segundo navbar -->
+<nav class="navbar navbar-expand-lg bg-info bg-opacity-10">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarOfertas">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown bg-primary bg-opacity-75  rounded mx-2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-table-cells-large"></i> Todas las categorías
+                    </a>
+                    <ul class="dropdown-menu"></ul>
+                </li>
+                <li class="nav-item dropdown bg-warning bg-opacity-50 rounded">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-percent"></i> Ofertas
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item mb-1" href="">
+                                <i class="fa-solid fa-lightbulb me-1 text-warning"></i>Mas
+                                vendido</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item mb-1" href="#">
+                                <i class="fa-solid fa-dog me-1 text-danger-emphasis"></i>Perro</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-cat me-1 text-danger-emphasis"></i>Gatos</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Favoritos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Revista</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div id="carouselExampleIndicators" class="carousel slide my-3" data-bs-ride="carousel">
+        <div class="carousel-inner rounded-4">
+            <div class="carousel-item active">
+                <img src="{% static 'assets/Bravery-1.png' %}" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'assets/banner-1.png' %}" class="d-block w-100" alt="..." />
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-secondary rounded" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-secondary rounded" aria-hidden="true"></span>
+        </button>
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+        </div>
+    </div>
+    <h3>Alimentos</h3>
+    <div class="row mt-5">
+      {% for product in products %}
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-5">
+        <div class="card h-100 border border-0 p-1">
+          <a href="{% url 'prodDetail' product.id %}">
+            <img src="{{ product.image }}" class="card-img-top" alt="..." />
+          </a>
+          <div class="card-body">
+            <h5 class="card-title fw-bold">${{ product.price }}</h5>
+            <div class="fw-light">
+              <span class="badge text-bg-dark bg-opacity-50">1 un</span>
+            </div>
+            <div class="fw-light">{{ product.brand }}</div>
+            <p class="card-text text-truncate-multiline">{{ product.name }}</p>
+            <div class="d-grid col-12">
+              
+              <button
+                class="btn btn-primary opacity-75  text-center fw-bold"
+                onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}', '{{ product.image }}');"
+              >
+                Agregar
+              </button>
+             
+            </div>
+          </div>
+          <div class="justify-content-start">
+            <i class="fa-solid fa-star text-warning"></i> {{ product.rating }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock content%}
+<!-- https://www.djangotemplatetagsandfilters.com/ -->
