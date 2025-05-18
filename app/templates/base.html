@@ -1,128 +1,274 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}PetyFlix{% endblock %}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <link rel="stylesheet" href="{% static 'css/card.css' %}">
   <script src="{% static 'js/manageCart.js' %}"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="icon" href="{% static 'assets/bgpetty.png' %}" type="image">
+  <style>
+    body { font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f6f7fb; }
+    .navbar-futuristic {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+      border-radius: 0 0 32px 32px;
+      padding: 0.7rem 0;
+      transition: background 0.3s, box-shadow 0.3s;
+      animation: fadeInDown 0.7s;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .navbar-futuristic .navbar-brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      margin-right: 0.7rem;
+      transition: transform 0.2s;
+    }
+    .navbar-futuristic .navbar-brand img:hover {
+      transform: scale(1.08) rotate(-3deg);
+    }
+    .navbar-futuristic .navbar-brand span {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: 0.03em;
+      color: #ff7b00;
+      text-shadow: 0 2px 8px #fff2;
+    }
+    .navbar-futuristic .search-animated {
+      flex: 1 1 420px;
+      max-width: 480px;
+      margin: 0 2rem;
+      border-radius: 32px;
+      box-shadow: 0 2px 16px rgba(255,123,0,0.10);
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      align-items: center;
+      transition: box-shadow 0.3s, background 0.3s;
+      border: 2px solid #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .navbar-futuristic .search-animated:focus-within {
+      box-shadow: 0 4px 32px #ff7b0033;
+      background: #fff;
+      border-color: #ff7b00;
+    }
+    .navbar-futuristic .search-animated input {
+      border: none;
+      background: transparent;
+      outline: none;
+      flex: 1;
+      padding: 0.7rem 1.2rem;
+      font-size: 1.1rem;
+      color: #222;
+    }
+    .navbar-futuristic .search-animated button {
+      background: linear-gradient(90deg, #ff7b00 60%, #ff8c00 100%);
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px #ff7b0033;
+    }
+    .navbar-futuristic .search-animated button:hover {
+      background: linear-gradient(90deg, #ff8c00 60%, #ff7b00 100%);
+      transform: scale(1.08);
+    }
+    .navbar-futuristic .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .navbar-futuristic .action-btn {
+      background: #fff;
+      color: #ff7b00;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 2px 12px #ff7b0033;
+      border: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .navbar-futuristic .action-btn:hover {
+      background: #ff7b00;
+      color: #fff;
+      transform: scale(1.10);
+    }
+    .navbar-futuristic .cart-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: #ff8c00;
+      color: #fff;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      padding: 0.15em 0.5em;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #ff7b0033;
+    }
+    @media (max-width: 992px) {
+      .navbar-futuristic .search-animated { margin: 0 0.5rem; max-width: 100%; }
+      .navbar-futuristic .navbar-brand span { font-size: 1.1rem; }
+      .navbar-futuristic .action-btn { width: 38px; height: 38px; font-size: 1.1rem; }
+    }
+    @media (max-width: 768px) {
+      .navbar-futuristic { border-radius: 0 0 16px 16px; padding: 0.4rem 0; }
+      .navbar-futuristic .navbar-brand img { width: 32px; height: 32px; }
+      .navbar-futuristic .search-animated { min-width: 80px; }
+    }
+    #content { padding-top: 110px; }
+  </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-dark fs-6 py-0">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarOfertas">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-        <div class="d-flex">
-          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-            <li class="nav-item">
-              <a class="nav-link text-white" href="">El soto Centro de ayuda</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Estado de tu pedido</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Medios de Envio</a>
-            </li>
-            <li class="nav-item">
-              <div class="dropdown">
-                <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Nuestros Destacados
-                </button>
-                <ul class="dropdown-menu"></ul>
-              </div>
-            </li>
-          </ul>
-        </div>
+  <!-- Navbar futurista -->
+  <nav class="navbar navbar-futuristic d-flex align-items-center justify-content-between">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+        <img src="{% static 'assets/LogoPequeño.png' %}" alt="Logo" />
+        <span>PetyFlix</span>
+      </a>
+      <form class="search-animated mx-2" role="search">
+        <input type="search" placeholder="¿Qué estás buscando?" />
+        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+      <div class="navbar-actions">
+        <button class="action-btn" title="Modo de entrega"><i class="fa-solid fa-location-dot"></i></button>
+        {% if user.id is None %}
+          <a href="{% url 'login' %}" class="action-btn" title="Ingresar"><i class="fa-regular fa-user"></i></a>
+        {% else %}
+          <a href="{% url 'customerData' %}" class="action-btn" title="Mi perfil"><i class="fa-regular fa-user"></i></a>
+        {% endif %}
+        <a href="{% url 'view_cart' %}" class="action-btn position-relative" title="Carrito">
+          <i class="fa-solid fa-cart-shopping"></i>
+          {% if user.is_authenticated %}
+          <span class="cart-badge">{{ user.cart.items.count }}</span>
+          {% endif %}
+        </a>
       </div>
     </div>
   </nav>
-  <div id="content">
-    {% block content %}
 
+  <!-- Contenido principal -->
+  <div id="content" class="fade-in">
+    {% block content %}
     {% endblock %}
-    <footer class="pt-3 mt-5">
-      <ul class="nav justify-content-evenly border-top bg-light border-top">
-        <li class="nav_item">
+  </div>
+
+  <!-- Footer -->
+  <footer class="pt-3 mt-5 animate__animated animate__fadeInUp">
+    <div class="container">
+      <ul class="nav justify-content-evenly border-top bg-light">
+        <li class="nav-item">
           <div class="nav p-3 fw-bold">Centro de Ayuda</div>
-          <ul class="flex-colum my-2">
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Problemas</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="">Informacion de pago</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Como modificar mis datos</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Modos de entrega</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Locales</a>
-            </li>
+          <ul class="list-unstyled">
+            <li class="nav py-2"><a class="nav-link" href="{% url 'contact' %}">Problemas</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Información de pago</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Cómo modificar mis datos</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Modos de entrega</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Locales</a></li>
           </ul>
         </li>
-        <li class="nav_item">
+        <li class="nav-item">
           <div class="nav p-3 fw-bold">Nosotros</div>
-          <ul class="flex-colum my-2">
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Compromisos</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Locales</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Productos</a>
-            </li>
-            <li class="nav py-2">
-              <a class="text-decoration-none text-muted" href="#">Proveedores</a>
-            </li>
+          <ul class="list-unstyled">
+            <li class="nav py-2"><a class="nav-link" href="#">Compromisos</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Locales</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Productos</a></li>
+            <li class="nav py-2"><a class="nav-link" href="#">Proveedores</a></li>
           </ul>
         </li>
-        <li class="nav_item">
-          <ul class="flex-colum my-2"></ul>
-          <div class="nav pt-3 fw-bold">Siguenos</div>
-          <ul class="d-flex my-2">
-            <li class="nav-item list-unstyled py-2">
-              <a class="text-decoration-none text-muted" href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            </li>
-            <li class="nav-item list-unstyled py-2 ms-2">
-              <a class="text-decoration-none text-muted" href="#"><i class="fa-brands fa-instagram"></i></a>
-            </li>
-            <li class="nav-item list-unstyled py-2 ms-2">
-              <a class="text-decoration-none text-muted" href="#"><i class="fa-brands fa-tiktok"></i></a>
-            </li>
+        {% if perms.app.add_product %}
+        <li class="nav-item">
+          <div class="nav p-3 fw-bold">Permisos</div>
+          <ul class="list-unstyled">
+            <li class="nav py-2"><a class="nav-link" href="{% url 'addProduct' %}">Agregar productos</a></li>
+            {% if perms.app.view_product %}
+            <li class="nav py-2"><a class="nav-link" href="{% url 'listProduct' %}">Ver listado de productos</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <div class="nav pt-3 fw-bold">Síguenos</div>
+          <ul class="d-flex social-icons my-2">
+            <li class="nav-item"><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+            <li class="nav-item ms-3"><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+            <li class="nav-item ms-3"><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
           </ul>
           <div class="nav pt-3 fw-bold">Medios de pago</div>
-          <ul class="d-flex my-2">
-            <li class="nav-item list-unstyled py-2">
-              <a class="text-decoration-none text-muted" href="#"><i class="fa-brands fa-cc-visa"></i></a>
-            </li>
-            <li class="nav-item list-unstyled py-2 ms-2">
-              <a class="text-decoration-none text-muted" href="#"><i class="fa-brands fa-cc-mastercard"></i></a>
-            </li>
+          <ul class="d-flex social-icons my-2">
+            <li class="nav-item"><a href="{% url 'pay' %}"><i class="fa-brands fa-cc-visa"></i></a></li>
+            <li class="nav-item ms-3"><a href="{% url 'pay' %}"><i class="fa-brands fa-cc-paypal"></i></a></li>
           </ul>
         </li>
       </ul>
+    </div>
     </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {% if messages %}
+  {% for message in messages %}
+  <script>
+    Swal.fire({
+      "title": "{{ message }}",
+      "icon": "{% if message.tags == 'success' %}success{% else %}error{% endif %}",
+      "showConfirmButton": false,
+      "timer": 2000
+    });
+  </script>
+  {% endfor %}
+  {% endif %}
+  {% block scripts %}{% endblock %}
+
+  <!-- Sidebar Mini-Carrito -->
+  <div id="cartSidebarOverlay" class="cart-sidebar-overlay" style="display:none;"></div>
+  <aside id="cartSidebar" class="cart-sidebar">
+    <div class="cart-sidebar-header d-flex justify-content-between align-items-center p-3">
+      <span class="fs-5 fw-bold"><i class="fa-solid fa-cart-shopping me-2"></i>Tu carrito</span>
+      <button class="btn-close" id="closeCartSidebar" aria-label="Cerrar"></button>
+    </div>
+    <div class="cart-sidebar-body px-3" id="cartSidebarBody">
+      <!-- Aquí se cargan los productos dinámicamente -->
+    </div>
+    <div class="cart-sidebar-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Total:</span>
+        <span class="fw-bold fs-5" id="cartSidebarTotal">$0</span>
+      </div>
+      <a href="{% url 'view_cart' %}" class="btn btn-primary w-100 fw-bold" id="goToCartBtn">Proceder al pago</a>
+    </div>
+  </aside>
 </body>
-
 </html>
